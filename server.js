@@ -1,20 +1,20 @@
 //Require node packages 
-let express = require('express');
-let handlebars = require('express-handlebars');
-//let logger = require('morgan');
-let mongoose = require('mongoose');
-let axios = require('axios');
-let cheerio = require('cheerio');
+const express = require('express');
+const handlebars = require('express-handlebars');
+//const logger = require('morgan');
+const mongoose = require('mongoose');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 
 //Require the models from my models folder
-let db = require('./models');
+const db = require('./models');
 
 //connection to port
 const PORT = 8080;
 
 //Initialize Express
-let app = express();
+const app = express();
 
 //Use morgan logger for logging requests
 //app.use(logger('dev'));
@@ -31,20 +31,30 @@ mongoose.connect('mongodb://localhost/articledb', { useNewUrlParser: true });
 //GET route to scrap website of choice
 app.get('/scrape', function (req, res) {
     //grab body of HTML using axios
-    axios.get('https://medium.com/topic/programming').then(function (response) {
+    axios.get('https://www.sciencedaily.com/news/computers_math/computer_programming/').then(function (response) {
         //loan into cheerio and save it into a shorthand selector of $
-        let $ = cheerio.load(response.data);
+        const $ = cheerio.load(response.data);
         //create an empty array to save the data to be scraped
-        let results = [];
+        // const className = $('.latest-head');
+        // const output = className.children('a').text();
+        // const link = className.children('a').attr('href');
+        // console.log(output);
 
-        $('div h3').each(function (i, element) {
 
-            results.title = $(this)
+
+
+        $('.latest-head').each(function (i, element) {
+
+            let result = [];
+
+            result.title = $(this)
                 .children('a')
                 .text();
-            results.link = $(this)
+            //console.log(result.title);
+            result.link = $(this)
                 .children('a')
                 .attr('href');
+            console.log(result.title + result.link);
 
             db.Article.create(result)
                 .then(function (dbArticle) {
@@ -58,10 +68,13 @@ app.get('/scrape', function (req, res) {
     });
 });
 
+
 //Route to get the articles form the db
 app.get('articles', function (req, res) {
+    //grab all the documents in the Articles collection
     db.Article.find({})
         .then(function (dbArticle) {
+            //send back the articles found to the client
             res.json(dbArticle);
         })
         .catch(function (err) {
@@ -70,10 +83,14 @@ app.get('articles', function (req, res) {
 });
 
 //Route to get a specific article by id and populate it with a note
+app.get('/articles/:id', function (req, res) {
 
+})
 
 //Route to save/update the article's note
+app.post('/articles/:id', function (req, res) {
 
+})
 
 //start server
 app.listen(PORT, function () {
