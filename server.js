@@ -11,7 +11,7 @@ const cheerio = require('cheerio');
 const db = require('./models');
 
 //connection to port
-const PORT = 8080;
+const PORT = 8060;
 
 //Initialize Express
 const app = express();
@@ -34,17 +34,10 @@ app.get('/scrape', function (req, res) {
     axios.get('https://www.sciencedaily.com/news/computers_math/computer_programming/').then(function (response) {
         //loan into cheerio and save it into a shorthand selector of $
         const $ = cheerio.load(response.data);
-        //create an empty array to save the data to be scraped
-        // const className = $('.latest-head');
-        // const output = className.children('a').text();
-        // const link = className.children('a').attr('href');
-        // console.log(output);
-
-
 
 
         $('.latest-head').each(function (i, element) {
-
+            //create an empty array to save the data to be scraped
             let result = [];
 
             result.title = $(this)
@@ -70,7 +63,7 @@ app.get('/scrape', function (req, res) {
 
 
 //Route to get the articles form the db
-app.get('articles', function (req, res) {
+app.get('/articles', function (req, res) {
     //grab all the documents in the Articles collection
     db.Article.find({})
         .then(function (dbArticle) {
@@ -84,11 +77,31 @@ app.get('articles', function (req, res) {
 
 //Route to get a specific article by id and populate it with a note
 app.get('/articles/:id', function (req, res) {
-
-})
+    // query that finds the matching id in our mongo database
+    db.Article.findOne({ _id: req.params.id })
+        //populate all the notes that are associated with the article 
+        .populate('note')
+        .then(function (dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+});
 
 //Route to save/update the article's note
 app.post('/articles/:id', function (req, res) {
+    //create a new note and pass the req.body to the note entry
+    db.Note.create(req.body)
+        .then(function (dbNote) {
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        })
+        .then(function (dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function (err) {
+            res.json(err);
+        })
 
 })
 
