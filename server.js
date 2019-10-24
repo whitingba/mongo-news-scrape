@@ -1,6 +1,5 @@
 //Require node packages 
 const express = require('express');
-const handlebars = require('express-handlebars');
 //const logger = require('morgan');
 const mongoose = require('mongoose');
 const axios = require('axios');
@@ -24,10 +23,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
+//set handlebars
+const exphbs = require('express-handlebars');
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
 //Connect to Mongo DB
 mongoose.connect('mongodb://localhost/articledb', { useNewUrlParser: true });
 
 //Routes
+
+
+app.get('/', function (req, res) {
+    res.render('index')
+})
+
 //GET route to scrap website of choice
 app.get('/scrape', function (req, res) {
     //grab body of HTML using axios
@@ -37,8 +48,8 @@ app.get('/scrape', function (req, res) {
 
 
         $('.latest-head').each(function (i, element) {
-            //create an empty array to save the data to be scraped
-            let result = [];
+            //create an empty object to save the data to be scraped
+            var result = {};
 
             result.title = $(this)
                 .children('a')
@@ -47,7 +58,8 @@ app.get('/scrape', function (req, res) {
             result.link = $(this)
                 .children('a')
                 .attr('href');
-            console.log(result.title + result.link);
+
+            // console.log(result.title + result.link);
 
             db.Article.create(result)
                 .then(function (dbArticle) {

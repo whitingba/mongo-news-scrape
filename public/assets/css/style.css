@@ -1,0 +1,5 @@
+.background {
+    background-image: url('/images/techimage.jpg');
+    background-size: cover;
+    height: 700px;
+}
