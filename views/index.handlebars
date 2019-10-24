@@ -1,3 +1,30 @@
-<div class="jumbotron background" style="background-image: url('/images/techimage.jpg');">
+<div class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Tech News Daily</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Saved Articles</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="jumbotron background">
 
+    <a class="btn btn-success btn-lg" href="#" role="button">Scrape Articles</a>
+    <a class="btn btn-danger btn-lg" href="#" role="button">Clear Articles</a>
+</div>
+
+<div>
+    {{!-- TODO: fix this so it will show up once the news is scraped --}}
+    <h1>All your news that is fit to scrape is here!</h1>
+</div>
+<div id="articles">
+    {{!-- {{#each news}} --}}
 </div>

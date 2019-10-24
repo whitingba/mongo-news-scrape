@@ -1,5 +1,21 @@
 .background {
     background-image: url('/images/techimage.jpg');
     background-size: cover;
-    height: 700px;
+    height: 500px;
+}
+.siteName {
+    color: white;
+}
+.home {
+    color: white;
+}
+
+.btn {
+    margin-top: -45px;
+    margin-right: 10px;
+}
+
+
+h1 {
+    text-align: center;
 }
