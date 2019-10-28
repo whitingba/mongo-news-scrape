@@ -39,6 +39,7 @@ app.get('/', function (req, res) {
     res.render('index')
 })
 
+
 //GET route to scrap website of choice
 app.get('/scrape', function (req, res) {
     //grab body of HTML using axios
@@ -89,14 +90,8 @@ app.get('/articles', function (req, res) {
 
 //Route to view all the saved articles
 app.get('/save', function (req, res) {
-    db.Save.find({})
-        .then(function (dbSave) {
-            res.json(dbSave);
-        })
-        .catch(function (err) {
-            res.json(err);
-        });
-});
+    res.render('savedArticles')
+})
 
 //Route to get a specific article by id and populate it with a note
 app.get('/articles/:id', function (req, res) {
