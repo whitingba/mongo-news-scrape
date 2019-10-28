@@ -35,9 +35,10 @@ $(document).ready(function () {
     function createNewRow(article) {
         var $newInputRow = $(
             [
-                `<tr>`,
+                `<tr class='articleRow'>`,
                 `<td> ${article.title} </td>`,
-                `<td><a class="btn btn-success btn-lg link" href="${article.link}" role="button">Link</a></td>`,
+                `<td><a class="btn btn-success link" href="https://www.sciencedaily.com${article.link}" target="_blank" role="button">Article Link</a></td>`,
+                `<td><a class="btn btn-success link" href="#" target="_blank" role="button">Save Article</a></td>`,
                 `<tr>`
             ].join("")
         );
