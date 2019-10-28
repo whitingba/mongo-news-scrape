@@ -10,7 +10,13 @@
     color: white;
 }
 
-.btn {
+.scraper{
+    margin-top: -45px;
+    margin-right: 10px;
+}
+
+
+.clear{
     margin-top: -45px;
     margin-right: 10px;
 }
@@ -20,10 +26,10 @@ h1 {
     text-align: center;
 }
 
-.tableHead {
-
-}
-
 .table td {
     padding: 20px;
+}
+
+.links {
+    margin-top: ;
 }

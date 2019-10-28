@@ -4,9 +4,9 @@ $(document).ready(function () {
     var articles = [];
 
     //EVENT LISTENERS
-    // $(document).on('click', '.scraper', scrapeArticles);
-    // $(document).on('click', '', clearArticles);
-    // $(document).on('click', '', saveArticle);
+    $(document).on('click', '.scraper', scrapeArticles);
+    $('.clear').on('click', clearArticles);
+    $(document).on('click', '.btn.save', saveArticle);
 
 
     grabArticles();
@@ -35,11 +35,13 @@ $(document).ready(function () {
     function createNewRow(article) {
         var $newInputRow = $(
             [
+
                 `<tr class='articleRow'>`,
                 `<td> ${article.title} </td>`,
-                `<td><a class="btn btn-success link" href="https://www.sciencedaily.com${article.link}" target="_blank" role="button">Article Link</a></td>`,
-                `<td><a class="btn btn-success link" href="#" target="_blank" role="button">Save Article</a></td>`,
+                `<td><a class="btn btn-success links" href="https://www.sciencedaily.com${article.link}" target="_blank" role="button">Article Link</a></td>`,
+                `<td><a class="btn btn-success links save" href="#" target="_blank" role="button">Save Article</a></td>`,
                 `<tr>`
+
             ].join("")
         );
         $newInputRow.data("article", article);
@@ -47,22 +49,38 @@ $(document).ready(function () {
         return $newInputRow;
     }
 
+    //function to hadgle the 'clear articles' button
+    function clearArticles() {
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/clear',
+            success: function (response) {
+                $articleContainer.empty();
+            }
+        })
+    }
 
-    //function to create the container the article will go into along with a button to save the article
+    //function to scrape articles when the 'scrape button' is clicked
+    function scrapeArticles() {
+        $.get('/scrape').then(function (data) {
+            grabArticles();
+        })
+    }
+
+    function saveArticle() {
+        $.ajax({
+            method: 'PUT',
+            dataType: 'json',
+            url: '/save'
+        }).then(function (data) {
+            if (data.saved) {
+                grabArticles();
+            }
+        })
+    }
 
 
-    //function to save the article when 'save article' button is clicked
-    //this will include the PUT method
-
-
-    //function to scrape articles when the scrape button is clicked
-    // const scrapeArticles = () => {
-    //     $.get('/scrape').then(function (data) {
-
-    //     });
-    // }
-
-    //function to hangle the 'clear articles' button
 
 
 

@@ -87,6 +87,17 @@ app.get('/articles', function (req, res) {
         });
 });
 
+//Route to view all the saved articles
+app.get('/save', function (req, res) {
+    db.Save.find({})
+        .then(function (dbSave) {
+            res.json(dbSave);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+});
+
 //Route to get a specific article by id and populate it with a note
 app.get('/articles/:id', function (req, res) {
     // query that finds the matching id in our mongo database
@@ -116,6 +127,18 @@ app.post('/articles/:id', function (req, res) {
         })
 
 })
+
+// app.get('/clear', function (req, res) {
+//     db.Article.deleteMany({}, function (error, response) {
+//         if (error) {
+//             console.log(error);
+//             res.send(error);
+//         }
+//         else {
+//             res.send(response);
+//         }
+//     });
+// });
 
 //start server
 app.listen(PORT, function () {
