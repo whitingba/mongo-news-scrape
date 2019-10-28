@@ -17,14 +17,41 @@
 </div>
 <div class="jumbotron background">
 
-    <a class="btn btn-success btn-lg" href="#" role="button">Scrape Articles</a>
+    <a class="btn btn-success btn-lg scraper" href="#" role="button">Scrape Articles</a>
     <a class="btn btn-danger btn-lg" href="#" role="button">Clear Articles</a>
 </div>
 
 <div>
     {{!-- TODO: fix this so it will show up once the news is scraped --}}
-    <h1>All your news that is fit to scrape is here!</h1>
+    <h1></h1>
 </div>
-<div id="articles">
-    {{!-- {{#each news}} --}}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col col-lg-12">
+            <div class="text-center">
+                <h1>All your news that is fit to scrape is here!</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Article</th>
+
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="article-container">
+                    {{!-- {{#each Articles}}
+                    <tr>
+                        {{this.title}}
+                        <button>Save</button>
+                    </tr>
+                    {{/each}} --}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
