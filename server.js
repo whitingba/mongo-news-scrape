@@ -1,6 +1,6 @@
 //Require node packages 
 const express = require('express');
-//const logger = require('morgan');
+const logger = require('morgan');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -16,7 +16,7 @@ const PORT = 8060;
 const app = express();
 
 //Use morgan logger for logging requests
-//app.use(logger('dev'));
+app.use(logger('dev'));
 
 //Parse the request body as JSON
 app.use(express.urlencoded({ extended: true }));
@@ -35,9 +35,16 @@ mongoose.connect('mongodb://localhost/articledb', { useNewUrlParser: true });
 //Routes
 
 
-app.get('/', function (req, res) {
-    res.render('index')
-})
+app.get("/", function (req, res) {
+    db.Article.find({}, null, function (err, data) {
+        if (data.length === 0) {
+            res.render('message', { message: "Hit the scrape button above to see fresh news!" });
+        }
+        else {
+            res.render('index', { articles: data });
+        }
+    });
+});
 
 
 //GET route to scrap website of choice
@@ -70,31 +77,27 @@ app.get('/scrape', function (req, res) {
                     console.log(err);
                 });
         });
-        res.send("Scrape Complete");
+        console.log("Scrape Complete");
+        res.redirect('/');
     });
 });
 
 
-//Route to get the articles form the db
-app.get('/articles', function (req, res) {
-    //grab all the documents in the Articles collection
-    db.Article.find({})
-        .then(function (dbArticle) {
-            //send back the articles found to the client
-            res.json(dbArticle);
-        })
-        .catch(function (err) {
-            res.json(err);
-        });
-});
 
 //Route to view all the saved articles
 app.get('/save', function (req, res) {
-    res.render('savedArticles')
-})
+    db.Article.find({ issaved: true }, null, function (err, data) {
+        if (data.length === 0) {
+            res.render('message', { message: "Try saving some articles first, then come back" });
+        }
+        else {
+            res.render('saved', { saved: data });
+        }
+    });
+});
 
 //Route to get a specific article by id and populate it with a note
-app.get('/articles/:id', function (req, res) {
+app.get('/save/:id', function (req, res) {
     // query that finds the matching id in our mongo database
     db.Article.findOne({ _id: req.params.id })
         //populate all the notes that are associated with the article 
@@ -123,17 +126,17 @@ app.post('/articles/:id', function (req, res) {
 
 })
 
-// app.get('/clear', function (req, res) {
-//     db.Article.deleteMany({}, function (error, response) {
-//         if (error) {
-//             console.log(error);
-//             res.send(error);
-//         }
-//         else {
-//             res.send(response);
-//         }
-//     });
-// });
+app.get('/clear', function (req, res) {
+    db.Article.deleteMany({}, function (error, response) {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            res.send(response);
+        }
+    });
+});
 
 //start server
 app.listen(PORT, function () {

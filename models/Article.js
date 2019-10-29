@@ -12,8 +12,25 @@ var ArticleSchema = new Schema({
     link: {
         type: String,
         required: true
+    },
+
+    issaved: {
+        type: Boolean,
+        default: false
+    },
+
+    status: {
+        type: String,
+        default: "Save Article"
+    },
+
+    note: {
+        type: Schema.Types.ObjectId,
+        ref: 'Note'
     }
 });
+
+
 
 //create our model using the schema above
 let Article = mongoose.model("Article", ArticleSchema);

@@ -1,52 +1,27 @@
-<div class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Tech News Daily</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link saveButton" href="/save">Saved Articles</a>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="jumbotron background">
+<div class="row">
+    <div class="col col-lg-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Article</th>
+                    <th scope="col">Link to Article</th>
+                    <th scope="col">Save Article</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each articles}}
 
-    <a class="btn btn-success btn-lg scraper" href="#" role="button">Scrape Articles</a>
-    <a class="btn btn-danger btn-lg clear" href="#" role="button">Clear Articles</a>
-</div>
+                <tr class="articleRow">
+                    <td>{{this.title}}</td>
+                    <td><a class="btn btn-success links" href='https://www.sciencedaily.com{{this.link}}'
+                            target=" _blank" role="button">Article Link</a></td>
+                    <td><button data-id="{{this.id}}" class="btn btn-success save" role="button">Save Article</button>
+                    </td>
+                </tr>
 
-<div>
-    {{!-- TODO: fix this so it will show up once the news is scraped --}}
-    <h1></h1>
-</div>
-<div class="container mt-3">
-    {{!-- <div class="row">
-        <div class="col col-lg-12">
-            <div class="text-center">
-                <h1>All your news that is fit to scrape is here!</h1>
-            </div>
-        </div>
-    </div> --}}
-    <div class="row">
-        <div class="col col-lg-12">
-            <table class="table table-striped">
-                {{!-- <thead>
-                    <tr>
-                        <th scope="col">Article</th>
+                {{/each}}
 
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead> --}}
-                <tbody class="article-container">
-
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
 </div>

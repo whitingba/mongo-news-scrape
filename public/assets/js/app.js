@@ -1,12 +1,13 @@
 $(document).ready(function () {
     //VARIABLES
     var $articleContainer = $(".article-container");
+    var $savedContainer = $(".saved-article-container");
     var articles = [];
 
     //EVENT LISTENERS
     $(document).on('click', '.scraper', scrapeArticles);
     $('.clear').on('click', clearArticles);
-    $(document).on('click', '.btn.save', saveArticle);
+    //$(document).on('click', '.btn.save', saveArticle);
 
 
     grabArticles();
@@ -68,19 +69,11 @@ $(document).ready(function () {
         })
     }
 
-    function saveArticle() {
-        $.ajax({
-            method: 'PUT',
-            dataType: 'json',
-            url: '/save'
-        }).then(function (data) {
-            if (data.saved) {
-                grabArticles();
-            }
-        })
-    }
+
+    //function to capture the saved articles to the Save collection
 
 
+    //function to render the saved articles to the Saved Articles screen
 
 
 
