@@ -15,7 +15,12 @@
                     <td>{{this.title}}</td>
                     <td><a class="btn btn-success links" href='https://www.sciencedaily.com{{this.link}}'
                             target=" _blank" role="button">Article Link</a></td>
-                    <td><button data-id="{{this.id}}" class="btn btn-success save" role="button">Save Article</button>
+
+                    <td>
+                        <form action="/update" method="PUT" id="save-article">
+                            <input type="hidden" name="id" value={{this._id}}>
+                            <button class="btn btn-success save" type="submit">Save Article</button>
+                        </form>
                     </td>
                 </tr>
 

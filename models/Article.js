@@ -19,11 +19,6 @@ var ArticleSchema = new Schema({
         default: false
     },
 
-    status: {
-        type: String,
-        default: "Save Article"
-    },
-
     note: {
         type: Schema.Types.ObjectId,
         ref: 'Note'

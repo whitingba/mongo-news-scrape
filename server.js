@@ -82,33 +82,52 @@ app.get('/scrape', function (req, res) {
     });
 });
 
+app.get('/saved', function (req, res) {
+    var savedArticles = [];
+    db.Article.find({ issaved: true }, function (err, saved) {
+        if (err) throw err;
+        savedArticles.push(saved)
+        res.render('savedArticles', { saved })
+    });
+});
 
+// //Route to view all the saved articles
+// app.get('/saved', function (req, res) {
+//     db.Article.find({ issaved: true }, null, function (err, data) {
+//         if (data.length === 0) {
+//             res.render('message', { message: "Try saving some articles first, then come back" });
+//         }
+//         else {
+//             res.render('notsaved', { save: data });
+//         }
+//     });
+// });
 
-//Route to view all the saved articles
-app.get('/save', function (req, res) {
-    db.Article.find({ issaved: true }, null, function (err, data) {
-        if (data.length === 0) {
-            res.render('message', { message: "Try saving some articles first, then come back" });
+// Route to save an article
+app.put('/update/:id', function (req, res) {
+    db.Article.updateOne({ _id: req.params.id }, { $set: { issaved: true } }, function (err, result) {
+        if (result.changedRows == 0) {
+            return res.status(404).end();
         }
         else {
-            res.render('saved', { saved: data });
+            res.status(200).end();
         }
     });
 });
 
-//Route to get a specific article by id and populate it with a note
-app.get('/save/:id', function (req, res) {
-    // query that finds the matching id in our mongo database
-    db.Article.findOne({ _id: req.params.id })
-        //populate all the notes that are associated with the article 
-        .populate('note')
-        .then(function (dbArticle) {
-            res.json(dbArticle);
-        })
-        .catch(function (err) {
-            res.json(err);
-        });
+//Route to unSave an article
+app.put('/unsave/:id', function (req, res) {
+    db.Article.updateOne({ _id: req.params.id }, { $set: { issaved: false } }, function (err, result) {
+        if (result.changedRows == 0) {
+            return res.status(404).end();
+        }
+        else {
+            res.status(200).end();
+        }
+    });
 });
+
+
 
 //Route to save/update the article's note
 app.post('/articles/:id', function (req, res) {
@@ -133,7 +152,8 @@ app.get('/clear', function (req, res) {
             res.send(error);
         }
         else {
-            res.send(response);
+            console.log('articles cleared');
+            res.redirect('/');
         }
     });
 });
