@@ -83,12 +83,19 @@ app.get('/scrape', function (req, res) {
 });
 
 app.get('/saved', function (req, res) {
-    var savedArticles = [];
+    //var savedArticles = [];
     db.Article.find({ issaved: true }, function (err, saved) {
-        if (err) throw err;
-        savedArticles.push(saved)
-        res.render('savedArticles', { saved })
+        //savedArticles.push(saved)
+        //console.log(savedArticles.length);
+
+        if (saved.length === 0) {
+            res.render('message', { message: "Try saving some articles first, then come back" });
+        } else {
+
+            res.render('savedArticles', { saved })
+        }
     });
+
 });
 
 // //Route to view all the saved articles

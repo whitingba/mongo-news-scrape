@@ -10,7 +10,7 @@ $(document).ready(function () {
     $(document).on('click', '#save-article', saveArticle);
     $(document).on('click', '#unsave-article', unSaveArticle);
 
-
+    //Since I was able to get handlebars to function I have removed the following functions as they are no longer necessary
     // grabArticles();
 
     // //populate with articles that are saved in database
@@ -86,9 +86,9 @@ $(document).ready(function () {
             url: "/update/" + articleSaveId,
             data: articleSaveId
         }).then(function (data) {
-            if (data.issaved) {
-                location.reload();
-            }
+
+            location.reload();
+
         })
     }
 
@@ -103,9 +103,10 @@ $(document).ready(function () {
             url: "/unsave/" + articleUnSaveId,
             data: articleUnSaveId
         }).then(function (data) {
-            if (data.issaved) {
-                res.redirect('/saved');
-            }
+            //
+
+            location.reload();
+
         })
     }
 

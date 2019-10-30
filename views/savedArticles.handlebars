@@ -11,7 +11,7 @@
             </thead>
             <tbody>
                 {{#each saved}}
-
+                {{#if issaved}}
                 <tr class="articleRow">
                     <td>{{this.title}}</td>
                     <td><a class="btn btn-success links" href='https://www.sciencedaily.com{{this.link}}'
@@ -27,7 +27,7 @@
                         <button value="{{this.id}}" class="btn btn-success addNote" role="button">Add/Edit Note</button>
                     </td>
                 </tr>
-
+                {{/if}}
                 {{/each}}
 
             </tbody>

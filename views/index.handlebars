@@ -10,7 +10,7 @@
             </thead>
             <tbody>
                 {{#each articles}}
-
+                {{#unless issaved}}
                 <tr class="articleRow">
                     <td>{{this.title}}</td>
                     <td><a class="btn btn-success links" href='https://www.sciencedaily.com{{this.link}}'
@@ -23,7 +23,7 @@
                         </form>
                     </td>
                 </tr>
-
+                {{/unless}}
                 {{/each}}
 
             </tbody>
