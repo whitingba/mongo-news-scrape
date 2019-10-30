@@ -1,7 +1,9 @@
 # mongo-scrape-news
-Homework 14: All the News That's Fit to Scrape
+
 
 ### Background
+Homework 14: All the News That's Fit to Scrape. Assignment was to find a website and scrape the HTML to pull in article titles, associated link and any other information we would want to scrape. I chose Science Daily and specifically articles in the computer programming category. 
+Once the website is scraped the information needs to be displayed and have the ability to save articles and a button to clear all the articles. Once saved you can save and edit notes to the articles. 
 
 
 ### Links
