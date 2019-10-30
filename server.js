@@ -30,7 +30,10 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 //Connect to Mongo DB
-mongoose.connect('mongodb://localhost/articledb', { useNewUrlParser: true });
+//mongoose.connect('mongodb://localhost/articledb', { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/articledb";
+
+mongoose.connect(MONGODB_URI);
 
 //Routes
 
@@ -83,10 +86,8 @@ app.get('/scrape', function (req, res) {
 });
 
 app.get('/saved', function (req, res) {
-    //var savedArticles = [];
+
     db.Article.find({ issaved: true }, function (err, saved) {
-        //savedArticles.push(saved)
-        //console.log(savedArticles.length);
 
         if (saved.length === 0) {
             res.render('message', { message: "Try saving some articles first, then come back" });
