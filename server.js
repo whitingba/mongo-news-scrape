@@ -10,7 +10,7 @@ const cheerio = require('cheerio');
 const db = require('./models');
 
 //connection to port
-const PORT = 8060;
+var PORT = process.env.PORT || 8060;
 
 //Initialize Express
 const app = express();
