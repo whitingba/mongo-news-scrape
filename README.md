@@ -5,10 +5,9 @@ Homework 14: All the News That's Fit to Scrape
 
 
 ### Links
-Deployed app: 
+Deployed app: https://rocky-badlands-05422.herokuapp.com/
 
 ### Screenshots 
-
 
 ##### Main Screen upon entering app
 
@@ -21,6 +20,8 @@ Deployed app:
 * Bootstrap
 * MongoDB
 * Mongoose
+* Cheerio
+* Axios
 
 ### Author
 Barbara Whiting
